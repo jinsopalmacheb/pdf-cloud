@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>PDF Cloud</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h1>📂 PDF Cloud</h1>
+    <p>Sube, abre y descarga tus PDFs desde cualquier lugar</p>
+
+    <!-- Subir PDF -->
+    <form action="/upload" method="post" enctype="multipart/form-data" class="upload-box">
+        <input type="file" name="file" accept="application/pdf" required>
+        <button type="submit">⬆️ Subir PDF</button>
+    </form>
+
+    <div class="pdf-list">
+        {% if files|length == 0 %}
+            <p class="empty">📭 No hay PDFs subidos</p>
+        {% endif %}
+
+        {% for file in files %}
+        <div class="pdf-card">
+            <div class="pdf-name">📄 {{ file }}</div>
+
+            <div class="actions">
+                <a href="/view/{{ file }}" target="_blank">Abrir</a>
+                <a href="/download/{{ file }}">Descargar</a>
+                <a href="/delete/{{ file }}" class="delete">Eliminar</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+</body>
+</html>
